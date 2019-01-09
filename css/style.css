@@ -2,28 +2,43 @@
   box-sizing: border-box;
 }
 
-.jumbotron {
+h1 {
   text-align: center;
+    color: orangered;
+    font-size: 60px;
 }
 
-.alphabets {
-  padding: 5px;
+#hang-img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#guess {
+    letter-spacing: 17px;
+    font-size: 32px;
+    text-align: center;
+
+}
+
+#letters {
   text-align: center;
+  margin: 10px;
 }
 
-.wordToGuess {
-  text-align: center;
-  color: black;
-  letter-spacing: 2px;
+#wrong {
+    font-size: 24px;
+    text-align: center;
+
 }
 
-.btn-group {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
+#message {
+ font-size: 24px;
+ text-align: center;
 }
 
-input[type="text"] {
-    text-align:center;
+#reset {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }

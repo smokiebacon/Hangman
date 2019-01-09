@@ -1,70 +1,93 @@
-/*----- constants -----*/
-/*----- app's state (variables) -----*/
-  var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
-        'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
-        't', 'u', 'v', 'w', 'x', 'y', 'z'];
+/*------------- constants -------------*/
+let words = [
+    'PIKACHU',
+    'CHARMANDER',
+    'SQUIRTLE',
+    'BULBASAUR',
+    'ZAPDOS',
+    'MOLTRES',
+    'ARTICUNO',
+    'MEWTWO',
+    'DRAGONITE',
+    'NINETAILS',
+    'LAPRAS'
+];
 
-  let categories;         // Array of topics
-  let chosenCategory;     // Selected catagory
-  let getHint;          // Word getHint
-  let word;     //can use replace ()         // Selected word
-  let guess;             // guess
-  let guesses = [ ];      // Stored incorrect guesses
-  let lives;             // Lives
-  let correctGuesses;    // Count correct geusses
-  let underScores = '_';
+/*------------- app's state -------------*/
+var secretWord, wrongCount, guess;
 
-word = ['PIKACHU', 'BULBASAUR', 'CHARMANDER', 'SQUIRTLE'];
-wordIndex = Math.floor(Math.random() * word.length);
-guess = word[wordIndex];
-//guess.split('');
-console.log(guess);
+/*------------- cached element references -------------*/
+var $guess = $('#guess');
+var $img = $('#hang-img');
+var $message = $('#message');
 
+/*------------- event listeners -------------*/
+$('#letters').on('click', handleLetterClick);
 
-function drawUnderScores () {
-  for (var i = 0; i < guess.length; i++) {
-    $('.wordToGuess').html('_');
-  }
-}
+$('#reset').on('click', initialize);
 
-for (var i = 0; i < guess.length; i++) {
-  console.log(guess[i]);
-}
-// guess.forEach(function(element) {
-//   console.log(guess[element]);
-// });
+/*------------- functions -------------*/
+initialize();
 
-//use //join() if word==guess, win;
-//img0, img1, img2, img3, img4. img5, img6  //7 total images
-//incorrect is an array to push,
-//#also corresponds to # of incorrect guesses
-//in underscore, can use letter spacing to increase/decrease spacing
-/*----- cached element references -----*/
-$('.wordToGuess').text(drawUnderScores());
+function initialize() {
+    wrongCount = 0;
+    randomIndex = Math.floor(Math.random() * words.length);
+    secretWord = words[randomIndex];
+    console.log(secretWord);
 
+    guess = "";
 
-/*----- event listeners -----*/
-$('.alphabets').on('click', handleBetClick);
+    for (var i = 0; i < secretWord.length; i++) {
+      let currentLetter = secretWord.charAt(i);
+      if (currentLetter === " ") {
+          guess += " "
+      } else {
+          guess += "_";
+      }
+    };
 
-/*----- functions -----*/
-
-function handleBetClick(e) {
-  let letter = e.target.textContent;
-  console.log(letter);
+    $('button.letter-button').prop('disabled', false);
+    render();
 }
 
 
+function render() {
+    $guess.html(guess);
+    $('#wrong').html(`WRONG GUESSES: ${wrongCount}`);
+    $img.attr('src', 'images/img' + wrongCount + '.png')
 
-//select a random word from an Array
-//split word into individual letters
-//display letters onto screen as underscores_
-//have an input box which accepts only letters
-//if match guessed letter to Word
- //if letter not in word, store letter in guesses array, lives--
- //if letter is in word, change underscore to the letter, lives stay the same
- //
+    if (guess === secretWord) {
+        $message.html("Congratulations!! You win!");
+        $message.fadeIn();
+    } else if ( wrongCount === 6) {
+        $message.html("Sorry! You've run out of chances.");
+        $message.fadeIn();
+    } else {
+        $message.html("")
+        $message.hide();
+    }
+}
 
+function handleLetterClick (evt) {
+    if (wrongCount === 6) return;
 
+    var letter = evt.target.textContent;
+    console.log(letter);
+    if (secretWord.includes(letter)) {
+      let guessArray = guess.split('');
 
+       for (var i = 0; i < secretWord.length; i++) {
+         if (secretWord.charAt(i) === letter) guessArray[i] = letter;
+       }
+       guess = guessArray.join('');
 
- //
+    } else {
+        if (evt.target.id !== "reset") {
+            wrongCount++;
+
+        }
+    }
+
+    $(evt.target).prop('disabled', true).css('text-decoration', 'line-through');
+    render();
+}

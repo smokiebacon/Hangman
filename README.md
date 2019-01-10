@@ -10,7 +10,7 @@ This HangMan game disguises words as underscores of pokemon characters from Poke
 
 
 
-![game]
+![game](https://smokiebacon.github.io/Hangman/)
 # Instructions for the game
 The goal of this game is to figure out the missing word. Buttons of the alphabet will be provided in order to complete this.
 
@@ -27,4 +27,8 @@ For advanced features, I'd like to use the Pokemon API to get a list of every Po
 Then, also display hints to the user of what type of Pokemon it is (such as Electric, Flying, Fire, Water, etc).
 
 Also, when the player wins, display the image of the correctly guessed Pokemon.
+
+Use key events to listen for the letters that your players will type.
+
+
 # Link to HangMan

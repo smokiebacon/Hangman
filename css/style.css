@@ -4,8 +4,14 @@
 
 h1 {
   text-align: center;
-    color: orangered;
-    font-size: 60px;
+  color: orangered;
+  font-size: 60px;
+}
+
+canvas {
+  color:$white;
+  border: $white dashed 2px;
+  padding:15px;
 }
 
 #hang-img {
@@ -15,10 +21,9 @@ h1 {
 }
 
 #guess {
-    letter-spacing: 17px;
-    font-size: 32px;
-    text-align: center;
-
+  letter-spacing: 17px;
+  font-size: 32px;
+  text-align: center;
 }
 
 #letters {
@@ -27,14 +32,13 @@ h1 {
 }
 
 #wrong {
-    font-size: 24px;
-    text-align: center;
-
+  font-size: 24px;
+  text-align: center;
 }
 
 #message {
- font-size: 24px;
- text-align: center;
+  font-size: 24px;
+  text-align: center;
 }
 
 #reset {

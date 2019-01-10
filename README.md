@@ -1,6 +1,6 @@
 # HANGMAN: Pokemon Theme
 
-This HangMan game disguises words as underscores of pokemon characters from Pokemon Television shows from the mid 1990's through the early 2000's.
+This HangMan game disguises words as underscores of pokemon characters from Pokemon Television shows.
 
 # Technologies used:
 1. HTML
@@ -10,7 +10,7 @@ This HangMan game disguises words as underscores of pokemon characters from Poke
 
 
 
-![game](https://smokiebacon.github.io/Hangman/)
+[game](https://smokiebacon.github.io/Hangman/)
 # Instructions for the game
 The goal of this game is to figure out the missing word. Buttons of the alphabet will be provided in order to complete this.
 

@@ -1,27 +1,14 @@
 /*------------- constants -------------*/
-let words = [
-  'PIKACHU',
-  'CHARMANDER',
-  'SQUIRTLE',
-  'BULBASAUR',
-  'ZAPDOS',
-  'MOLTRES',
-  'ARTICUNO',
-  'MEWTWO',
-  'DRAGONITE',
-  'NINETAILS',
-  'LAPRAS'
-];
 
 /*------------- app's state -------------*/
-var secretWord, wrongCount, guess;
+var pokeObj, secretWord, wrongCount, guess, words;
 
 
 /*------------- cached element references -------------*/
-var $guess = $('#guess');
-var $img = $('#hang-img');
-var $pokemonlogo = $('#pokemonlogo')
-var $message = $('#message');
+let $guess = $('#guess');
+let $img = $('#hang-img');
+let $message = $('#message');
+let $hint = $('#pokemonType span');
 
 /*------------- event listeners -------------*/
 $('#letters').on('click', handleLetterClick);
@@ -32,25 +19,35 @@ $('#reset').on('click', initialize);
 initialize();
 
 function initialize() {
-  wrongCount = 0;
-  randomIndex = Math.floor(Math.random() * words.length);
-  secretWord = words[randomIndex];
-  console.log(secretWord);
+  $.ajax({   //because this is asynchynous, must be first or else rest of code won't run
+    url: 'https://pokeapi.co/api/v2/pokemon',
+    dataType: 'json',
+    method: 'GET'
+  }).done(function(data) {
+    words = data.results
+      .filter(poke => !poke.name.includes('-')) //taking out poke's with "-" in it's name.
+      .map(poke => poke.name.toUpperCase());
+    wrongCount = 0;
+    randomIndex = Math.floor(Math.random() * words.length);
+    secretWord = words[randomIndex];
+    console.log(secretWord);
+    guess = "";
 
-  guess = "";
+    for (var i = 0; i < secretWord.length; i++) {
+      let currentLetter = secretWord.charAt(i);
+      if (currentLetter === " ") {
+        guess += " "
+      } else {
+        guess += "_";
+      }
+    };
 
-  for (var i = 0; i < secretWord.length; i++) {
-    let currentLetter = secretWord.charAt(i);
-    if (currentLetter === " ") {
-      guess += " "
-    } else {
-      guess += "_";
-    }
-  };
-
-  $('button.letter-button').prop('disabled', false);
-  render();
+    $('button.letter-button').prop('disabled', false);
+    render();
+  });
 }
+
+
 
 
 function render() {
@@ -90,18 +87,17 @@ function handleLetterClick(evt) {
     }
   }
 
-  $(evt.target).prop('disabled', true).css('text-decoration', 'line-through');
+  $(evt.target).prop('disabled', true);
   render();
 }
 
-// //GET NAME WITH POKEMON API
+
+
+
+//GET NAME WITH POKEMON API
 // let types = ['electric', 'normal'];
 // let trainerTypes = types.map(function(type) {
-// return $.ajax({
-//   url: 'https://pokeapi.co/api/v2/pokemon/pikachu/',
-//   dataType: 'json',
-//   method: 'GET'
-//     });
+//
 // });
 //
 // $.when.apply(null, trainerTypes)
@@ -113,6 +109,7 @@ function handleLetterClick(evt) {
 //
 //  function getTypeOfPokemon (pokemonTypes) {
 //    pokemonTypes = pokemonTypes.map(function(types){
-//      console.log(types[0].species.name); //GET NAME OF POKEMON
+//      pokeapi = (types[0].species.name);
+//      console.log(pokeapi); //GETS NAME OF POKEMON
 //    });
 //  }

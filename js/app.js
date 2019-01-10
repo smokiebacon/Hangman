@@ -20,6 +20,7 @@ var secretWord, wrongCount, guess;
 /*------------- cached element references -------------*/
 var $guess = $('#guess');
 var $img = $('#hang-img');
+var $pokemonlogo = $('#pokemonlogo')
 var $message = $('#message');
 
 /*------------- event listeners -------------*/
@@ -58,10 +59,10 @@ function render() {
   $img.attr('src', 'images/img' + wrongCount + '.png')
 
   if (guess === secretWord) {
-    $message.html("Congratulations!! You win!");
+    $message.html("Congratulations! You win!");
     $message.fadeIn();
   } else if (wrongCount === 6) {
-    $message.html("Sorry! You've run out of chances.");
+    $message.html("You lost! You've run out of chances.");
     $message.fadeIn();
   } else {
     $message.html("")

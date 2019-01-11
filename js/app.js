@@ -15,11 +15,14 @@ $('#reset').on('click', initialize);
 /*------------- functions -------------*/
 initialize();
 function initialize() {
-  $.ajax({   //because this is asynchynous, must be first or else rest of code won't run
-    url: 'https://pokeapi.co/api/v2/pokemon',
-    dataType: 'json',
-    method: 'GET'
-  }).done(function(data) { //when done, does something with the data:
+  // $.ajax({   //because this is asynchynous, must be first or else rest of code won't run
+  //   url: 'https://pokeapi.co/api/v2/pokemon/',
+  //   dataType: 'json',
+  //   method: 'GET'
+  // }).done(function(data) { //when done, does something with the data:
+
+  fetch('https://pokeapi.co/api/v2/pokemon/').then(res => res.json()).then(data => {
+  
     words = data.results
       .filter(poke => !poke.name.includes('-')) //taking out poke's with "-" in it's name.
       .map(poke => poke.name.toUpperCase()); //goes thru entire poke' names and upperCases

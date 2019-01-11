@@ -3,7 +3,6 @@
 /*------------- app's state -------------*/
 var pokeObj, secretWord, wrongCount, guess, words;
 
-
 /*------------- cached element references -------------*/
 let $guess = $('#guess');
 let $img = $('#hang-img');
@@ -19,20 +18,23 @@ $('#reset').on('click', initialize);
 initialize();
 
 function initialize() {
+
+
   $.ajax({   //because this is asynchynous, must be first or else rest of code won't run
     url: 'https://pokeapi.co/api/v2/pokemon',
     dataType: 'json',
     method: 'GET'
-  }).done(function(data) {
+  }).done(function(data) { //when done, does something with the data:
     words = data.results
       .filter(poke => !poke.name.includes('-')) //taking out poke's with "-" in it's name.
-      .map(poke => poke.name.toUpperCase());
+      .map(poke => poke.name.toUpperCase()); //goes thru entire poke' names and upperCases
+
     wrongCount = 0;
     randomIndex = Math.floor(Math.random() * words.length);
     secretWord = words[randomIndex];
+
     console.log(secretWord);
     guess = "";
-
     for (var i = 0; i < secretWord.length; i++) {
       let currentLetter = secretWord.charAt(i);
       if (currentLetter === " ") {
@@ -46,9 +48,6 @@ function initialize() {
     render();
   });
 }
-
-
-
 
 function render() {
   $guess.html(guess);
@@ -67,10 +66,8 @@ function render() {
   }
 }
 
-
 function handleLetterClick(evt) {
-  if (wrongCount === 6) return;
-
+  if (wrongCount === 6 || evt.target.tagName !== "BUTTON") return;
   var letter = evt.target.textContent;
   console.log(letter);
   if (secretWord.includes(letter)) {
@@ -90,26 +87,3 @@ function handleLetterClick(evt) {
   $(evt.target).prop('disabled', true);
   render();
 }
-
-
-
-
-//GET NAME WITH POKEMON API
-// let types = ['electric', 'normal'];
-// let trainerTypes = types.map(function(type) {
-//
-// });
-//
-// $.when.apply(null, trainerTypes)
-//  .then(function() {
-//    let pokemonTypes = Array.prototype.slice.call(arguments);//ARRAY-LIKE OBJECT TURNED INTO ARRAY
-//    getTypeOfPokemon(pokemonTypes);
-//    console.log(pokemonTypes);
-//  });
-//
-//  function getTypeOfPokemon (pokemonTypes) {
-//    pokemonTypes = pokemonTypes.map(function(types){
-//      pokeapi = (types[0].species.name);
-//      console.log(pokeapi); //GETS NAME OF POKEMON
-//    });
-//  }

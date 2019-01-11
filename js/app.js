@@ -22,7 +22,7 @@ function initialize() {
   // }).done(function(data) { //when done, does something with the data:
 
   fetch('https://pokeapi.co/api/v2/pokemon/').then(res => res.json()).then(data => {
-  
+
     words = data.results
       .filter(poke => !poke.name.includes('-')) //taking out poke's with "-" in it's name.
       .map(poke => poke.name.toUpperCase()); //goes thru entire poke' names and upperCases
@@ -49,7 +49,7 @@ function initialize() {
 function render() {
   $guess.html(guess);
   $('#wrong').html(`WRONG GUESSES: ${wrongCount}`);
-  $img.attr('src', 'images/img' + wrongCount + '.png')
+  $img.attr('src', 'images/IMG' + wrongCount + '.PNG')
 
   if (guess === secretWord) {
     $message.html("Congratulations! You win!");

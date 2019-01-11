@@ -2,13 +2,11 @@
 
 /*------------- app's state -------------*/
 var pokeObj, secretWord, wrongCount, guess, words;
-
 /*------------- cached element references -------------*/
 let $guess = $('#guess');
 let $img = $('#hang-img');
 let $message = $('#message');
 let $hint = $('#pokemonType span');
-
 /*------------- event listeners -------------*/
 $('#letters').on('click', handleLetterClick);
 
@@ -16,10 +14,7 @@ $('#reset').on('click', initialize);
 
 /*------------- functions -------------*/
 initialize();
-
 function initialize() {
-
-
   $.ajax({   //because this is asynchynous, must be first or else rest of code won't run
     url: 'https://pokeapi.co/api/v2/pokemon',
     dataType: 'json',
@@ -33,7 +28,6 @@ function initialize() {
     randomIndex = Math.floor(Math.random() * words.length);
     secretWord = words[randomIndex];
 
-    console.log(secretWord);
     guess = "";
     for (var i = 0; i < secretWord.length; i++) {
       let currentLetter = secretWord.charAt(i);
@@ -60,6 +54,7 @@ function render() {
   } else if (wrongCount === 6) {
     $message.html("You lost! You've run out of chances.");
     $message.fadeIn();
+    $guess.html(secretWord).css('color', 'red');
   } else {
     $message.html("")
     $message.hide();
@@ -83,7 +78,6 @@ function handleLetterClick(evt) {
       wrongCount++;
     }
   }
-
   $(evt.target).prop('disabled', true);
   render();
 }
